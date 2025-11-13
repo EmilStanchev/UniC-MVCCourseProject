@@ -1,0 +1,19 @@
+﻿@model Book
+@{
+
+}
+
+<form asp-action="Create" method="post">
+    <div>
+        <label>Title</label>
+        <input type="text" placeholder="Book title" asp-for="Title"/>
+    </div>
+
+    <div>
+        <label>Author</label>
+        <input type="text" placeholder="Book author" asp-for="Author" />
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>

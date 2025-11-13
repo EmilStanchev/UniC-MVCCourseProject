@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Books";
+}
+
+<div>
+    @{
+        <div>
+        <a asp-action="Create">Add new book</a>
+        </div>
+        if(Model.Count()<1)
+        {
+            <p style="color:red">No books to list</p>
+        }
+        else
+        {
+           <div class="d-flex justify-content-center flex-column align-items-center gap-4">
+           @{
+                    foreach (var book in Model)
+                    {
+                        <div class="d-flex flex-column justify-content-between gap-3">
+                            <h2 class="h4">@book.Title</h2>
+                            <h4 class="h6">@book.Author</h4>
+                           <div class="d-flex gap-5">
+                                <a asp-action="Details" asp-route-id="@book.Id">Details</a>
+                                <form asp-action="Delete" asp-route-id="@book.Id" method="post">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    }
+           }
+           </div>
+        }
+    }
+</div>
