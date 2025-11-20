@@ -1,34 +1,32 @@
 ﻿using FirstProjectExampleMVC.Models;
+using FirstProjectExampleMVC.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 public class GenreController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IGenreService _service;
 
-    public GenreController(ApplicationDbContext context)
+    public GenreController(IGenreService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    public IActionResult Index() => View(_context.Genres.ToList());
+    public IActionResult Index() => View(_service.GetAll());
 
     public IActionResult Create() => View();
 
     [HttpPost]
     public IActionResult Create(Genre genre)
     {
-        if (ModelState.IsValid)
-        {
-            _context.Genres.Add(genre);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(genre);
+        if (!ModelState.IsValid) return View(genre);
+
+        _service.Create(genre);
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Edit(int id)
     {
-        var genre = _context.Genres.Find(id);
+        var genre = _service.GetById(id);
         if (genre == null) return NotFound();
         return View(genre);
     }
@@ -36,21 +34,15 @@ public class GenreController : Controller
     [HttpPost]
     public IActionResult Edit(Genre genre)
     {
-        if (ModelState.IsValid)
-        {
-            _context.Update(genre);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(genre);
+        if (!ModelState.IsValid) return View(genre);
+
+        _service.Update(genre);
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Delete(int id)
     {
-        var genre = _context.Genres.Find(id);
-        if (genre == null) return NotFound();
-        _context.Genres.Remove(genre);
-        _context.SaveChanges();
+        _service.Delete(id);
         return RedirectToAction(nameof(Index));
     }
 }

@@ -1,10 +1,15 @@
+using FirstProjectExampleMVC.Services.Implementation;
+using FirstProjectExampleMVC.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 
+builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

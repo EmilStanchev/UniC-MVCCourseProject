@@ -1,39 +1,32 @@
 ﻿using FirstProjectExampleMVC.Models;
+using FirstProjectExampleMVC.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 public class AuthorController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IAuthorService _service;
 
-    public AuthorController(ApplicationDbContext context)
+    public AuthorController(IAuthorService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    public IActionResult Index()
-    {
-        var authors = _context.Authors.Include(a => a.Books).ToList();
-        return View(authors);
-    }
+    public IActionResult Index() => View(_service.GetAll());
 
     public IActionResult Create() => View();
 
     [HttpPost]
     public IActionResult Create(Author author)
     {
-        if (ModelState.IsValid)
-        {
-            _context.Add(author);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(author);
+        if (!ModelState.IsValid) return View(author);
+
+        _service.Create(author);
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Edit(int id)
     {
-        var author = _context.Authors.Find(id);
+        var author = _service.GetById(id);
         if (author == null) return NotFound();
         return View(author);
     }
@@ -41,22 +34,15 @@ public class AuthorController : Controller
     [HttpPost]
     public IActionResult Edit(Author author)
     {
-        if (ModelState.IsValid)
-        {
-            _context.Update(author);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(author);
+        if (!ModelState.IsValid) return View(author);
+
+        _service.Update(author);
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Delete(int id)
     {
-        var author = _context.Authors.Find(id);
-        if (author == null) return NotFound();
-
-        _context.Authors.Remove(author);
-        _context.SaveChanges();
+        _service.Delete(id);
         return RedirectToAction(nameof(Index));
     }
 }
