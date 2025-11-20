@@ -169,3 +169,4 @@ D:\VTU software engineering\KompNauki\OOP\FirstProjectExampleMVC\FirstProjectExa
 D:\VTU software engineering\KompNauki\OOP\FirstProjectExampleMVC\FirstProjectExampleMVC\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\VTU software engineering\KompNauki\OOP\FirstProjectExampleMVC\FirstProjectExampleMVC\obj\Debug\net8.0\FirstProjectExampleMVC.csproj.AssemblyReference.cache
 D:\VTU software engineering\KompNauki\OOP\FirstProjectExampleMVC\FirstProjectExampleMVC\obj\Debug\net8.0\FirstPro.9358079A.Up2Date
+D:\VTU software engineering\KompNauki\OOP\FirstProjectExampleMVC\FirstProjectExampleMVC\obj\Debug\net8.0\FirstProjectExampleMVC.sourcelink.json

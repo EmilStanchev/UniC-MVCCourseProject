@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Book>
+@{
+    ViewBag["Title"] = "Books";
+}
+
+<div>
+    @{
+        if(Model.Count()<1)
+        {
+            <h4>No books avaible</h4>
+        }
+        else
+        {
+            foreach(var book in Model)
+            {
+                <h4>@book.Title</h4>
+            }
+        }
+    }
+</div>

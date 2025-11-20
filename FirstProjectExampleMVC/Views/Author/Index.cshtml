@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Author>
+
+@{
+    ViewData["Title"] = "Authors";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">Authors</h2>
+    <a asp-action="Create" class="btn btn-success mb-3">+ Add Author</a>
+
+    @if (!Model.Any())
+    {
+        <p class="text-danger">No authors found.</p>
+    }
+    else
+    {
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Books Count</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var author in Model)
+                {
+                    <tr>
+                        <td>@author.Name</td>
+                        <td>@(author.Books?.Count ?? 0)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@author.Id"
+                               class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@author.Id"
+                               class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
