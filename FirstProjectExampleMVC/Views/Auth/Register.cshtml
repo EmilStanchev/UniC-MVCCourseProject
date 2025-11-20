@@ -1,0 +1,11 @@
+﻿@using FirstProjectExampleMVC.ViewModels
+@model RegisterViewModel
+
+<h2>Register</h2>
+
+<form method="post">
+    <input asp-for="Email" placeholder="Email" class="form-control" />
+    <input asp-for="Password" type="password" placeholder="Password" class="form-control" />
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

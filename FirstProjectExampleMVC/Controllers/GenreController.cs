@@ -1,5 +1,6 @@
 ﻿using FirstProjectExampleMVC.Models;
 using FirstProjectExampleMVC.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 public class GenreController : Controller
@@ -10,12 +11,16 @@ public class GenreController : Controller
     {
         _service = service;
     }
+    [Authorize]
 
     public IActionResult Index() => View(_service.GetAll());
+    [Authorize]
 
     public IActionResult Create() => View();
 
     [HttpPost]
+    [Authorize]
+
     public IActionResult Create(Genre genre)
     {
         if (!ModelState.IsValid) return View(genre);
@@ -23,6 +28,7 @@ public class GenreController : Controller
         _service.Create(genre);
         return RedirectToAction(nameof(Index));
     }
+    [Authorize]
 
     public IActionResult Edit(int id)
     {
@@ -30,6 +36,7 @@ public class GenreController : Controller
         if (genre == null) return NotFound();
         return View(genre);
     }
+    [Authorize]
 
     [HttpPost]
     public IActionResult Edit(Genre genre)
@@ -39,6 +46,7 @@ public class GenreController : Controller
         _service.Update(genre);
         return RedirectToAction(nameof(Index));
     }
+    [Authorize]
 
     public IActionResult Delete(int id)
     {

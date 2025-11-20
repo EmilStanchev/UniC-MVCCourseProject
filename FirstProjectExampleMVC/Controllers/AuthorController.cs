@@ -1,5 +1,6 @@
 ﻿using FirstProjectExampleMVC.Models;
 using FirstProjectExampleMVC.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 public class AuthorController : Controller
@@ -10,12 +11,17 @@ public class AuthorController : Controller
     {
         _service = service;
     }
+    [Authorize]
 
     public IActionResult Index() => View(_service.GetAll());
+
+    [Authorize]
 
     public IActionResult Create() => View();
 
     [HttpPost]
+    [Authorize]
+
     public IActionResult Create(Author author)
     {
         if (!ModelState.IsValid) return View(author);
@@ -23,6 +29,7 @@ public class AuthorController : Controller
         _service.Create(author);
         return RedirectToAction(nameof(Index));
     }
+    [Authorize]
 
     public IActionResult Edit(int id)
     {
@@ -32,6 +39,8 @@ public class AuthorController : Controller
     }
 
     [HttpPost]
+    [Authorize]
+
     public IActionResult Edit(Author author)
     {
         if (!ModelState.IsValid) return View(author);
@@ -39,6 +48,7 @@ public class AuthorController : Controller
         _service.Update(author);
         return RedirectToAction(nameof(Index));
     }
+    [Authorize]
 
     public IActionResult Delete(int id)
     {

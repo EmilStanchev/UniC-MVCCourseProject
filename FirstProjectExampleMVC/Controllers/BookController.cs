@@ -1,5 +1,6 @@
 ﻿using FirstProjectExampleMVC.Models;
 using FirstProjectExampleMVC.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 public class BookController : Controller
@@ -11,10 +12,12 @@ public class BookController : Controller
         _service = service;
     }
 
+    [Authorize]
     public IActionResult Index()
     {
         return View(_service.GetAllBooks());
     }
+    [Authorize]
 
     public IActionResult Create()
     {
@@ -28,6 +31,8 @@ public class BookController : Controller
     }
 
     [HttpPost]
+    [Authorize]
+
     public IActionResult Create(CreateBookViewModel vm)
     {
         if (!ModelState.IsValid)
@@ -47,6 +52,7 @@ public class BookController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+    [Authorize]
 
     public IActionResult Edit(int id)
     {
